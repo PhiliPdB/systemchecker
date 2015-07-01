@@ -2,6 +2,7 @@
 
 This PHP script can tell you wich browser and operating system you are using.
 You can see this in action on my [website](http://philipdb.nl/systeminfo/).
+It is still work in progress, so it could have errors and shit.
 
 Usage
 -----
