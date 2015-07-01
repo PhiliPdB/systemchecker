@@ -17,6 +17,7 @@ Now you can get the information
 echo $detected->showInfo('browser'); // Shows the browser you are using
 echo $detected->showInfo('version'); // Shows the version of the browser you are using
 echo $detected->showInfo('os'); // Shows the os you are using
+echo $detected->showInfo('all'); // Get an array with all information
 ```
 
 Support
