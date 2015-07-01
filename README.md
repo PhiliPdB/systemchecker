@@ -1,6 +1,7 @@
 # System Checker
 
 This PHP script can tell you wich browser and operating system you are using.
+You can see this in action on my [website](http://philipdb.nl/systeminfo/).
 
 Usage
 -----
