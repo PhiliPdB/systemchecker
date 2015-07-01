@@ -1,7 +1,26 @@
-# systemchecker
+# System Checker
 
 This PHP script can tell you wich browser and operating system you are using.
 
+Usage
+-----
+To use this, you first have to include 'system.php' and then you have to create a new class.
+```php
+include 'system.php'
+  
+$detected = new OS_BR()
+```
+
+Now you can get the information
+
+```php
+echo $detected->showInfo('browser'); // Shows the browser you are using
+echo $detected->showInfo('version'); // Shows the version of the browser you are using
+echo $detected->showInfo('os'); // Shows the os you are using
+```
+
+Support
+-------
 Currently it can only detect the following browsers:
 - Chrome
 - Firefox
