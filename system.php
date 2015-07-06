@@ -26,12 +26,15 @@ class OS_BR {
         foreach($browser as $key => $value) {
             if(preg_match($value, $this->agent)) {
                 switch ($key) {
-                    case 'Safari':
+                    case 'Safari': // First look if it is a webkit based browser
                         if (preg_match("/Android/i", $this->info['Operating System'])) {
                             $this->info = array_merge($this->info,array("Browser" => "Android Browser"));
                             $this->info = array_merge($this->info,array("Version" => ""));
                         } elseif (preg_match("/Blackberry/i", $this->info['Operating System'])) {
                             $this->info = array_merge($this->info,array("Browser" => "Blackberry Browser"));
+                            $this->info = array_merge($this->info,array("Version" => ""));
+                        } elseif (preg_match("/SymbianOS/i", $this->info['Operating System'])) {
+                            $this->info = array_merge($this->info,array("Browser" => "Nokia Web Browser"));
                             $this->info = array_merge($this->info,array("Version" => ""));
                         } else {
                             $this->info = array_merge($this->info,array("Browser" => $key));
@@ -62,7 +65,8 @@ class OS_BR {
                     "Mac OS X"          =>  "/Mac OS X (\d+.\d+.\d+|\d+.\d+)/i",
                     "IOS"			    =>	"/(CPU OS (\d+.\d+.\d+|\d+.\d+)|CPU iPhone OS (\d+.\d+.\d+|\d+.\d+))/i",
                     "Blackberry OS 10"	=>	"/BB10/i",
-                    "Blackberry OS"	    =>	"/Blackberry/i"
+                    "Blackberry OS"	    =>	"/Blackberry/i",
+                    "SymbianOS"         =>  "/SymbianOS.(\d*.\d*)/i"
                     ); // Only support for these operating systems
 
         foreach($OS as $key => $value) {
@@ -140,6 +144,12 @@ class OS_BR {
             			$version = $matches[1][0];
             			$this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
             			break;
+
+                    case 'SymbianOS':
+                        preg_match_all($value, $this->agent, $matches);
+                        $version = $matches[1][0];
+                        $this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
+                        break;
 
             		default:
             			$this->info = array_merge($this->info, array("Operating System" => $key));
