@@ -17,7 +17,7 @@ class OS_BR {
                          "Opera Mini"           =>  "/Opera Mini.(\d+.\d+.\d+)/i",
                          "Opera"                =>  "/(OPR.(\d+.\d+.\d+.\d+|\d+.\d+)|(Opera (\d+.\d+)|Opera))/i",
                          "Firefox"              =>	"/Firefox.(\d+.\d+.\d+|\d+.\d+)/i",
-                         "Internet Explorer"    =>	"/(MSIE (\d+)?|rv:(\d+)?)/i",
+                         "Internet Explorer"    =>	"/(MSIE (\d+)|rv:(\d+))/i",
                          "Edge"					=>	"/Edge.(\d+)/i",
                          "Google Chrome"        =>	"/chrome.(\d+.\d+.\d+.\d+)/i",
                          "Safari"				=>	"/Safari/i"
@@ -66,7 +66,7 @@ class OS_BR {
                     "IOS"			    =>	"/(CPU OS (\d+.\d+.\d+|\d+.\d+)|CPU iPhone OS (\d+.\d+.\d+|\d+.\d+))/i",
                     "Blackberry OS 10"	=>	"/BB10/i",
                     "Blackberry OS"	    =>	"/Blackberry/i",
-                    "SymbianOS"         =>  "/SymbianOS.(\d*.\d*)/i"
+                    "SymbianOS"         =>  "/SymbianOS.(\d+.\d+)/i"
                     ); // Only support for these operating systems
 
         foreach($OS as $key => $value) {
@@ -189,7 +189,7 @@ class OS_BR {
                 }
                 break;
 
-            case 'internet explorer': $version = $match[2][0] ? $match[2][0] : $match[4][0];
+            case 'internet explorer': $version = $match[2][0] ? $match[2][0] : $match[3][0];
             break;
 
             default: $version = $match[1][0];
