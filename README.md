@@ -35,6 +35,7 @@ Currently it can only detect the following browsers:
 - Android Webkit Browser (Stock Android Browser)
 - Internet Explorer
 - Edge
+- Nokia Web Browser (Default browser on Nokia S60 phones)
 
 And this operating systems:
 - Windows (2000+)
@@ -48,3 +49,4 @@ And this operating systems:
 - Linux Mint
 - Linux
 - Unix
+- SymbianOS
