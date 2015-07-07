@@ -43,6 +43,7 @@ Currently it can only detect the following browsers:
 - Ubuntu Web Browser
 - Nintendo Browser
 - Tizen Browser
+- Steam Game Overlay
 
 And this operating systems:
 
@@ -56,6 +57,9 @@ And this operating systems:
 - Ubuntu
 - Ubuntu Touch
 - Linux Mint
+- OpenSUSE
+- Fedora
+- Debian
 - Linux
 - Unix
 - SymbianOS

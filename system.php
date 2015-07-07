@@ -21,6 +21,7 @@ class OS_BR {
                          "Firefox for IOS"      =>  "/Fxi.(\d+.\d+)/i",
                          "Internet Explorer"    =>	"/(MSIE (\d+)|rv:(\d+))/i",
                          "Edge"					=>	"/Edge.(\d+)/i",
+                         "Steam Game Overlay"   =>  "/Valve Steam GameOverlay/i",
                          "Google Chrome"        =>	"/chrome.(\d+.\d+.\d+.\d+)/i",
                          "Nintendo Browser"     =>  "/NintendoBrowser.(\d+.\d+)/i",
                          "Safari"				=>	"/Safari/i"
@@ -82,6 +83,9 @@ class OS_BR {
 
                     "Ubuntu"            =>  "/Ubuntu/i",
                     "Linux Mint"        =>  "/Linux Mint/i",
+                    "OpenSUSE"          =>  "/OpenSUSE/i",
+                    "Fedora"            =>  "/Fedora/i",
+                    "Debian"            =>  "/Debian/i",
                     "Linux"             =>  "/Linux/i",
                     "Unix"              =>  "/Unix/i",
                     
