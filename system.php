@@ -30,7 +30,10 @@ class OS_BR {
             if(preg_match($value, $this->agent)) {
                 switch ($key) {
                     case 'Safari': // First look if it is a webkit based browser
-                        if (preg_match("/Android/i", $this->info['Operating System'])) {
+                        if (preg_match("/Tizen/i", $this->info['Operating System'])) {
+                            $this->info = array_merge($this->info,array("Browser" => "Tizen Browser"));
+                            $this->info = array_merge($this->info,array("Version" => ""));
+                        } elseif (preg_match("/Android/i", $this->info['Operating System'])) {
                             $this->info = array_merge($this->info,array("Browser" => "Android Browser"));
                             $this->info = array_merge($this->info,array("Version" => ""));
                         } elseif (preg_match("/Blackberry/i", $this->info['Operating System'])) {
@@ -72,10 +75,11 @@ class OS_BR {
     }
 
     function getOS() { // Get operating system
-        $OS = array("Android"           =>  "/(Android.(\d+.\d+.\d+|\d+.\d+)|Android)/i",
+        $OS = array("Tizen"             =>  "/Tizen (\d+.\d+)/i",
+                    "Android"           =>  "/(Android.(\d+.\d+.\d+|\d+.\d+)|Android)/i",
                     
                     "Windows"           =>  "/Windows/i",
-                    
+
                     "Ubuntu"            =>  "/Ubuntu/i",
                     "Linux Mint"        =>  "/Linux Mint/i",
                     "Linux"             =>  "/Linux/i",
@@ -134,6 +138,12 @@ class OS_BR {
             				}
             			}
             			break;
+
+                    // case 'Tizen':
+                    //     preg_match_all($value, $this->agent, $matches);
+                    //     $version = str_replace("_", ".", $matches[1][0]);
+                    //     $this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
+                    //     break;
             		
             		case 'Ubuntu':
                         if (preg_match("/Mobile|Tablet/i", $this->agent)) $this->info = array_merge($this->info, array("Operating System" => "Ubuntu Touch"));
@@ -158,11 +168,11 @@ class OS_BR {
             			$this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
             			break;
 
-                    case 'SymbianOS':
-                        preg_match_all($value, $this->agent, $matches);
-                        $version = $matches[1][0];
-                        $this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
-                        break;
+                    // case 'SymbianOS':
+                    //     preg_match_all($value, $this->agent, $matches);
+                    //     $version = $matches[1][0];
+                    //     $this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
+                    //     break;
 
                     case 'Playstation':
                         preg_match_all($value, $this->agent, $matches);
@@ -171,7 +181,9 @@ class OS_BR {
                         break;
 
             		default:
-            			$this->info = array_merge($this->info, array("Operating System" => $key));
+            			preg_match_all($value, $this->agent, $matches);
+                        $version = str_replace("_", ".", $matches[1][0]);
+                        $this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
             			break;
             	}
                 break;

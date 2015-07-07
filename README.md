@@ -42,6 +42,7 @@ Currently it can only detect the following browsers:
 - Nokia Web Browser (Default browser on Nokia S60 phones)
 - Ubuntu Web Browser
 - Nintendo Browser
+- Tizen Browser
 
 And this operating systems:
 
@@ -60,3 +61,4 @@ And this operating systems:
 - SymbianOS
 - FirefoxOS
 - Playstation OS
+- Tizen
