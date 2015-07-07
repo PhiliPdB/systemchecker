@@ -9,6 +9,7 @@ class OS_BR {
         // Get user agent and detect operating system and browser
         $this->agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : NULL;
         $this->getOS();
+        $this->getFormFactor();
         $this->getBrowser();
     }
 
@@ -17,9 +18,11 @@ class OS_BR {
                          "Opera Mini"           =>  "/Opera Mini.(\d+.\d+.\d+)/i",
                          "Opera"                =>  "/(OPR.(\d+.\d+.\d+.\d+|\d+.\d+)|(Opera (\d+.\d+)|Opera))/i",
                          "Firefox"              =>	"/Firefox.(\d+.\d+.\d+|\d+.\d+)/i",
+                         "Firefox for IOS"      =>  "/Fxi.(\d+.\d+)/i",
                          "Internet Explorer"    =>	"/(MSIE (\d+)|rv:(\d+))/i",
                          "Edge"					=>	"/Edge.(\d+)/i",
                          "Google Chrome"        =>	"/chrome.(\d+.\d+.\d+.\d+)/i",
+                         "Nintendo Browser"     =>  "/NintendoBrowser.(\d+.\d+)/i",
                          "Safari"				=>	"/Safari/i"
                          ); // Only support for this browsers
 
@@ -42,6 +45,13 @@ class OS_BR {
                         }
                         break;
                     
+                    case 'Firefox': // Check if is FirefoxOS
+                        $this->info = array_merge($this->info,array("Browser" => $key));
+                        $this->info = array_merge($this->info,array("Version" => $this->getVersion($key, $value, $this->agent)));
+                        if ($this->info['Operating System'] == "Unknown" && $this->info['Form Factor'] == "Mobile")
+                            $this->info['Operating System'] = "FirefoxOS";
+                        break;
+
                     default:
                         $this->info = array_merge($this->info,array("Browser" => $key));
                         $this->info = array_merge($this->info,array("Version" => $this->getVersion($key, $value, $this->agent)));
@@ -49,8 +59,13 @@ class OS_BR {
                 }
                 break;
             } else {
-                $this->info = array_merge($this->info,array("Browser" => "Unknown"));
-                $this->info = array_merge($this->info,array("Version" => ""));
+                if ($this->info['Operating System'] == "Ubuntu Touch") {
+                    $this->info = array_merge($this->info,array("Browser" => "Ubuntu Web Browser"));
+                    $this->info = array_merge($this->info,array("Version" => ""));
+                } else {
+                    $this->info = array_merge($this->info,array("Browser" => "Unknown"));
+                    $this->info = array_merge($this->info,array("Version" => ""));
+                }
             }
         }
         return $this->info['Browser'];
@@ -58,15 +73,25 @@ class OS_BR {
 
     function getOS() { // Get operating system
         $OS = array("Android"           =>  "/(Android.(\d+.\d+.\d+|\d+.\d+)|Android)/i",
+                    
                     "Windows"           =>  "/Windows/i",
+                    
+                    "Ubuntu"            =>  "/Ubuntu/i",
+                    "Linux Mint"        =>  "/Linux Mint/i",
                     "Linux"             =>  "/Linux/i",
                     "Unix"              =>  "/Unix/i",
+                    
                     "Chrome OS"         =>	"/CrOS/i",
+                    
                     "Mac OS X"          =>  "/Mac OS X (\d+.\d+.\d+|\d+.\d+)/i",
                     "IOS"			    =>	"/(CPU OS (\d+.\d+.\d+|\d+.\d+)|CPU iPhone OS (\d+.\d+.\d+|\d+.\d+))/i",
+                    
                     "Blackberry OS 10"	=>	"/BB10/i",
                     "Blackberry OS"	    =>	"/Blackberry/i",
-                    "SymbianOS"         =>  "/SymbianOS.(\d+.\d+)/i"
+                    
+                    "SymbianOS"         =>  "/SymbianOS.(\d+.\d+)/i",
+
+                    "Playstation"       =>  "/Playstation \d..?(\d+.\d+)/i"
                     ); // Only support for these operating systems
 
         foreach($OS as $key => $value) {
@@ -108,24 +133,12 @@ class OS_BR {
                                 break;
             				}
             			}
-
             			break;
             		
-            		case 'Linux':
-            			$distr = array("Ubuntu"		=>	"/Ubuntu/i",
-                                       "Linux Mint" =>  "/Linux Mint/i"
-            						   );
-
-            			foreach ($distr as $linux => $reg) {
-            				if (preg_match($reg, $this->agent)) {
-                                $this->info = array_merge($this->info, array("Operating System" => $linux));
-                                break;
-            				} else {
-                                $this->info = array_merge($this->info, array("Operating System" => "Linux"));
-                            }
-            			}
-
-            			break;
+            		case 'Ubuntu':
+                        if (preg_match("/Mobile|Tablet/i", $this->agent)) $this->info = array_merge($this->info, array("Operating System" => "Ubuntu Touch"));
+                        else $this->info = array_merge($this->info, array("Operating System" => $key));
+                        break;
 
             		case 'Mac OS X':
             			preg_match_all($value, $this->agent, $matches);
@@ -149,6 +162,12 @@ class OS_BR {
                         preg_match_all($value, $this->agent, $matches);
                         $version = $matches[1][0];
                         $this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
+                        break;
+
+                    case 'Playstation':
+                        preg_match_all($value, $this->agent, $matches);
+                        $version = $matches[2][0];
+                        $this->info = array_merge($this->info, array("Operating System" => $key . " " . $matches[1][0] . " OS " . $version));
                         break;
 
             		default:
@@ -198,6 +217,30 @@ class OS_BR {
         return $version;
     }
 
+    function getFormFactor() {
+        $formFactor = array("Mobile"            =>  "/Mobile/i",
+                            "Tablet"            =>  "/Tablet/i",
+                            "Desktop"           =>  "/Desktop/i",
+                            "TV"                =>  "/TV/i",
+                            "Game console"      =>  "/Xbox|Playstation|Wii/i",
+                            "Portable console"  =>  "/3DS|DSi|Playstation (Vita|Portable)/i"
+                            );
+
+        foreach ($formFactor as $key => $value) {
+            if (preg_match($value, $this->agent)) {
+                $this->info = array_merge($this->info, array("Form Factor" => $key));
+                break;
+            } else {
+                if (preg_match("/Android/i", $this->info['Operating System'])) $this->info = array_merge($this->info, array("Form Factor" => "Tablet"));
+                elseif (preg_match("/IOS/i", $this->info['Operating System'])) {
+                    if (preg_match("/iPhone/i", $this->agent)) $this->info = array_merge($this->info, array("Form Factor" => "Mobile"));
+                    else $this->info = array_merge($this->info, array("Form Factor" => "Tablet"));
+                }
+                else $this->info = array_merge($this->info, array("Form Factor" => "Unknown"));
+            }
+        }
+    }
+
     function showInfo($switch) { // Show the info
         $switch = strtolower($switch);
         switch($switch) {
@@ -208,6 +251,9 @@ class OS_BR {
             break;
 
             case "version": return $this->info['Version'];
+            break;
+
+            case "form": return $this->info['Form Factor'];
             break;
 
             case "all" : return array($this->info["Version"], 
