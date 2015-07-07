@@ -10,9 +10,9 @@ Usage
 To use this, you first have to include 'system.php' and then you have to create a new class.
 
 ```php
-include 'system.php'
+include 'system.php';
   
-$detected = new OS_BR()
+$detected = new OS_BR();
 ```
 
 Now you can get the information
