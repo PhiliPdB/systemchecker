@@ -24,6 +24,7 @@ class OS_BR {
                          "Steam Game Overlay"   =>  "/Valve Steam GameOverlay/i",
                          "Google Chrome"        =>	"/chrome.(\d+.\d+.\d+.\d+)/i",
                          "Nintendo Browser"     =>  "/NintendoBrowser.(\d+.\d+)/i",
+                         "S40 Ovi Browser"      =>  "/S40OviBrowswer.(\d+.\d+)/i",
                          "Safari"				=>	"/Safari/i"
                          ); // Only support for this browsers
 
@@ -98,6 +99,7 @@ class OS_BR {
                     "Blackberry OS"	    =>	"/Blackberry/i",
                     
                     "SymbianOS"         =>  "/SymbianOS.(\d+.\d+)/i",
+                    "Series 40"         =>  "/Series40/i",
 
                     "Playstation"       =>  "/Playstation \d..?(\d+.\d+)/i"
                     ); // Only support for these operating systems
