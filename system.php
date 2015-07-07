@@ -138,12 +138,6 @@ class OS_BR {
             				}
             			}
             			break;
-
-                    // case 'Tizen':
-                    //     preg_match_all($value, $this->agent, $matches);
-                    //     $version = str_replace("_", ".", $matches[1][0]);
-                    //     $this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
-                    //     break;
             		
             		case 'Ubuntu':
                         if (preg_match("/Mobile|Tablet/i", $this->agent)) $this->info = array_merge($this->info, array("Operating System" => "Ubuntu Touch"));
@@ -167,12 +161,6 @@ class OS_BR {
             			$version = $matches[1][0];
             			$this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
             			break;
-
-                    // case 'SymbianOS':
-                    //     preg_match_all($value, $this->agent, $matches);
-                    //     $version = $matches[1][0];
-                    //     $this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
-                    //     break;
 
                     case 'Playstation':
                         preg_match_all($value, $this->agent, $matches);
@@ -230,7 +218,7 @@ class OS_BR {
     }
 
     function getFormFactor() {
-        $formFactor = array("Mobile"            =>  "/Mobile/i",
+        $formFactor = array("Mobile"            =>  "/Mobi/i",
                             "Tablet"            =>  "/Tablet/i",
                             "Desktop"           =>  "/Desktop/i",
                             "TV"                =>  "/TV/i",
