@@ -27,6 +27,7 @@ class OS_BR {
                          "S40 Ovi Browser"      =>  "/S40OviBrowswer.(\d+.\d+)/i",
                          "Safari"				=>	"/Safari/i"
                          ); // Only support for this browsers
+                         // Order of this array is really important, because some operating systems are based on others
 
         foreach($browser as $key => $value) {
             if(preg_match($value, $this->agent)) {
@@ -77,10 +78,10 @@ class OS_BR {
     }
 
     function getOS() { // Get operating system
-        $OS = array("Tizen"             =>  "/Tizen (\d+.\d+)/i",
+        $OS = array("Windows"           =>  "/Windows/i",
+
+                    "Tizen"             =>  "/Tizen (\d+.\d+)/i",
                     "Android"           =>  "/(Android.(\d+.\d+.\d+|\d+.\d+)|Android)/i",
-                    
-                    "Windows"           =>  "/Windows/i",
 
                     "Ubuntu"            =>  "/Ubuntu/i",
                     "Linux Mint"        =>  "/Linux Mint/i",
@@ -103,6 +104,7 @@ class OS_BR {
 
                     "Playstation"       =>  "/Playstation \d..?(\d+.\d+)/i"
                     ); // Only support for these operating systems
+                    // Order of this array is really important, because some operating systems are based on others
 
         foreach($OS as $key => $value) {
             if (preg_match($value, $this->agent)) {
