@@ -236,14 +236,22 @@ class OS_BR {
 
         foreach ($formFactor as $key => $value) {
             if (preg_match($value, $this->agent)) {
-                $this->info = array_merge($this->info, array("Form Factor" => $key));
+                switch ($key) {
+                    case 'Mobile':
+                        if (preg_match("/IOS/i", $this->info['Operating System'])) {
+                            if (preg_match("/iPhone/i", $this->agent)) $this->info = array_merge($this->info, array("Form Factor" => "Mobile"));
+                            else $this->info = array_merge($this->info, array("Form Factor" => "Tablet"));
+                        } else $this->info = array_merge($this->info, array("Form Factor" => $key));
+                        break;
+                    
+                    default:
+                        $this->info = array_merge($this->info, array("Form Factor" => $key));
+                        break;
+                }
+
                 break;
             } else {
                 if (preg_match("/Android/i", $this->info['Operating System'])) $this->info = array_merge($this->info, array("Form Factor" => "Tablet"));
-                elseif (preg_match("/IOS/i", $this->info['Operating System'])) {
-                    if (preg_match("/iPhone/i", $this->agent)) $this->info = array_merge($this->info, array("Form Factor" => "Mobile"));
-                    else $this->info = array_merge($this->info, array("Form Factor" => "Tablet"));
-                }
                 else $this->info = array_merge($this->info, array("Form Factor" => "Unknown"));
             }
         }
