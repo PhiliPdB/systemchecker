@@ -2,11 +2,9 @@
 
 This PHP script can tell you wich browser and operating system you are using.
 You can see this in action on my [website](http://philipdb.nl/systeminfo/).
-It is still work in progress, so it could have errors and shit.
 It does now also detect the form factor of your device.
 
-Usage
------
+## Usage
 To use this, you first have to include 'system.php' and then you have to create a new class.
 
 ```php
@@ -25,8 +23,7 @@ echo $detected->showInfo('form'); // Shows the form factor of your device
 echo $detected->showInfo('all'); // Get an array with all information
 ```
 
-Support
--------
+## Support
 Currently it can only detect the following browsers:
 
 - Chrome
