@@ -230,8 +230,8 @@ class OS_BR {
                             "Tablet"            =>  "/Tablet/i",
                             "Desktop"           =>  "/Desktop/i",
                             "TV"                =>  "/TV/i",
-                            "Game console"      =>  "/Xbox|Playstation|Wii/i",
-                            "Portable console"  =>  "/3DS|DSi|Playstation (Vita|Portable)/i"
+                            "Portable console"  =>  "/3DS|DSi|Playstation (Vita|Portable)/i",
+                            "Game console"      =>  "/Xbox|Playstation|Wii/i"
                             );
 
         foreach ($formFactor as $key => $value) {
