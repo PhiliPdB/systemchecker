@@ -15,16 +15,22 @@ class OS_BR {
 
     function getBrowser() { // Detect browser
         $browser = array("Iceweasel"            =>  "/Iceweasel.(\d+.\d+.\d+|\d+.\d+)/i",
+                         
                          "Opera Mini"           =>  "/Opera Mini.(\d+.\d+.\d+)/i",
                          "Opera"                =>  "/(OPR.(\d+.\d+.\d+.\d+|\d+.\d+)|(Opera (\d+.\d+)|Opera))/i",
+                         
                          "Firefox"              =>	"/Firefox.(\d+.\d+.\d+|\d+.\d+)/i",
                          "Firefox for IOS"      =>  "/Fxi.(\d+.\d+)/i",
+                         
                          "Internet Explorer"    =>	"/(MSIE (\d+)|rv:(\d+))/i",
                          "Edge"					=>	"/Edge.(\d+)/i",
+                         
                          "Steam Game Overlay"   =>  "/Valve Steam GameOverlay/i",
                          "Google Chrome"        =>	"/chrome.(\d+.\d+.\d+.\d+)/i",
+                         
                          "Nintendo Browser"     =>  "/NintendoBrowser.(\d+.\d+)/i",
                          "S40 Ovi Browser"      =>  "/S40OviBrowswer.(\d+.\d+)/i",
+                         
                          "Safari"				=>	"/Safari/i"
                          ); // Only support for this browsers
                          // Order of this array is really important, because some operating systems are based on others
@@ -94,7 +100,7 @@ class OS_BR {
                     "Chrome OS"         =>	"/CrOS/i",
                     
                     "Mac OS X"          =>  "/Mac OS X (\d+.\d+.\d+|\d+.\d+)/i",
-                    "IOS"			    =>	"/(CPU OS (\d+.\d+.\d+|\d+.\d+)|CPU iPhone OS (\d+.\d+.\d+|\d+.\d+))/i",
+                    "IOS"			    =>	"/CPU (iPhone )?OS (\d+.\d+.\d+|\d+.\d+)/i",
                     
                     "Blackberry OS 10"	=>	"/BB10/i",
                     "Blackberry OS"	    =>	"/Blackberry/i",
@@ -160,7 +166,7 @@ class OS_BR {
 
             		case 'IOS':
             			preg_match_all($value, $this->agent, $matches);
-            			$version = $matches[2][0] ? str_replace("_", ".", $matches[2][0]) : str_replace("_", ".", $matches[3][0]);
+            			$version = str_replace("_", ".", $matches[2][0]);
             			$this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
             			break;
 
@@ -207,14 +213,6 @@ class OS_BR {
             	preg_match_all("/version.(\d+.\d+.\d+|\d+.\d+)/i", $this->agent, $matches);
             	$version = $matches[1][0];
             	break;
-
-            case "opera":
-                if ($match[2][0]) $version = $match[2][0];
-                else {
-                    preg_match_all("/version.(\d+.\d+)/i", $this->agent, $matches);
-                    $version = $matches[1][0];
-                }
-                break;
 
             case 'internet explorer': $version = $match[2][0] ? $match[2][0] : $match[3][0];
             break;
@@ -272,8 +270,12 @@ class OS_BR {
             case "form": return $this->info['Form Factor'];
             break;
 
-            case "all" : return array($this->info["Version"], 
-                $this->info['Operating System'], $this->info['Browser']);
+            case "all" : return array(
+                    $this->info["Version"], 
+                    $this->info['Operating System'],
+                    $this->info['Browser'],
+                    $this->info['Form Factor']
+                    );
                 break;
 
             default: return "Unknown";
