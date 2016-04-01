@@ -25,8 +25,9 @@ class OS_BR {
                          "Internet Explorer"    =>	"/(MSIE (\d+)|rv:(\d+))/i",
                          "Edge"					=>	"/Edge.(\d+)/i",
                          
+                         "Vivaldi"              =>  "/Vivaldi.(\d+\.\d+\.\d+\.\d+)/i",
                          "Steam Game Overlay"   =>  "/Valve Steam GameOverlay/i",
-                         "Google Chrome"        =>	"/chrome.(\d+.\d+.\d+.\d+)/i",
+                         "Google Chrome"        =>	"/chrome.(\d+\.\d+\.\d+\.\d+)/i",
                          
                          "Nintendo Browser"     =>  "/NintendoBrowser.(\d+.\d+)/i",
                          "S40 Ovi Browser"      =>  "/S40OviBrowswer.(\d+.\d+)/i",

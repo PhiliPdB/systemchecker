@@ -42,6 +42,7 @@ Currently it can only detect the following browsers:
 - Nintendo Browser
 - Tizen Browser
 - Steam Game Overlay
+- Vivaldi
 
 And this operating systems:
 
