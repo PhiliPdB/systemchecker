@@ -88,6 +88,7 @@ class OS_BR {
         $OS = array("Windows"           =>  "/Windows/i",
 
                     "Tizen"             =>  "/Tizen (\d+.\d+)/i",
+                    "Android TV"        =>  "/Android TV/i",
                     "Android"           =>  "/(Android.(\d+.\d+.\d+|\d+.\d+)|Android)/i",
 
                     "Ubuntu"            =>  "/Ubuntu/i",
@@ -117,6 +118,12 @@ class OS_BR {
             if (preg_match($value, $this->agent)) {
             	switch ($key) {
                     // For some operating systems you can also get the version numbers
+                    case 'Android TV':
+                        preg_match_all('/(Android.(\d+.\d+.\d+|\d+.\d+)|Android)/i', $this->agent, $matches);
+                        $version = $matches[2][0] ? $matches[2][0] : "";
+                        $this->info = array_merge($this->info, array("Operating System" => $key . " " . $version));
+                        break;
+
                     case 'Android':
                         preg_match_all($value, $this->agent, $matches);
                         $version = $matches[2][0] ? $matches[2][0] : "";

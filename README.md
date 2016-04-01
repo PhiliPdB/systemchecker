@@ -49,6 +49,7 @@ And this operating systems:
 - Windows (2000+)
 - Mac OS X
 - Android
+- Android TV
 - Windows Phone
 - IOS
 - Blackberry OS
